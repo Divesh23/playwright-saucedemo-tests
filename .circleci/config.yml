@@ -7,7 +7,7 @@ orbs:
 jobs:
   run-tests:
     docker:
-      - image: mcr.microsoft.com/playwright:v1.48.0-noble
+      - image: mcr.microsoft.com/playwright:v1.61.1-noble
     
     steps:
       - checkout
