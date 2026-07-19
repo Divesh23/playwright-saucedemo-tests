@@ -1,0 +1,36 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@7.2.1 # Simplifies caching and dependency management
+
+jobs:
+  run-tests:
+    docker:
+      # Use the official Microsoft Playwright image matching your project's Playwright version
+      - image: ://microsoft.com
+    resource_class: medium
+    steps:
+      - checkout # Pulls code from repository
+
+      # Installs packages and automatically caches node_modules
+      - node/install-packages:
+          pkg-manager: npm
+
+      # Executes Playwright tests
+      - run:
+          name: Run Playwright Tests
+          command: npx playwright test
+
+      # Uploads HTML reports/videos so you can view them in the CircleCI dashboard
+      - store_artifacts:
+          path: playwright-report
+          destination: playwright-report
+
+      # Parses and displays test results inside the CircleCI "Tests" UI tab
+      - store_test_results:
+          path: test-results
+
+workflows:
+  e2e-test-workflow:
+    jobs:
+      - run-tests
