@@ -7,18 +7,14 @@ orbs:
 jobs:
   run-tests:
     docker:
-      # Use the pre-built Playwright image matching your project's Playwright version
-      - image: ://microsoft.com
+      - image: mcr.microsoft.com/playwright:v1.48.0-noble
     
     steps:
-      # Pull down your source code
       - checkout
 
-      # Install node modules using caching for faster subsequent builds
       - node/install-packages:
           pkg-manager: npm
 
-      # Run the Playwright test suite
       - run:
           name: Run Playwright Tests
           command: npx playwright test
